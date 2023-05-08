@@ -8,48 +8,23 @@ int main()
     {
         cin >> n;
         string s;
-        int ans = 0, mn1, mn2, mnb;
-        mn1 = mn2 = mnb = INT_MAX;
-        vector<pair<int, string>> v;
-        for (int i = 0; i < n; i++)
+        map<string, int> mp;
+        mp["01"] = mp["10"] = mp["11"] = 1e6;
+        while (n--)
         {
             cin >> tt >> s;
             if (s != "00")
             {
-                v.push_back(make_pair(tt, s));
+                mp[s] = min(tt, mp[s]);
             }
         }
-        if (v.size() == 0)
-        {
-            cout << -1 << endl;
-            continue;
-        }
-        for (int i = 0; i < v.size(); i++)
-        {
-            if (v[i].second == "11")
-            {
-                mnb = min(mnb, v[i].first);
-            }
-            else if (v[i].second == "10")
-            {
-                mn1 = min(mn1, v[i].first);
-            }
-            else
-            {
-                mn2 = min(mn2, v[i].first);
-            }
-        }
-        if (mn1 + mn2 < mnb && mn1 != INT_MAX && mn2 != INT_MAX)
-        {
-            cout << mn1 + mn2 << endl;
-        }
-        else if (mnb == INT_MAX)
+        if (mp["11"] == 1e6 && mp["01"] + mp["10"] > 1e6)
         {
             cout << -1 << endl;
         }
         else
         {
-            cout << mnb << endl;
+            cout << min(mp["11"], mp["01"] + mp["10"]) << endl;
         }
     }
 }
